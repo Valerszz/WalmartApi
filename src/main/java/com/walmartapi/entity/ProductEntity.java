@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
+//representacion de una tabla en una base de datos
+
 @Table(name="products")
 @Data
 public class ProductEntity {
