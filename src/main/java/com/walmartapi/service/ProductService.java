@@ -3,10 +3,8 @@ package com.walmartapi.service;
 import com.walmartapi.entity.ProductEntity;
 import com.walmartapi.exception.NotFound;
 import com.walmartapi.mapper.CustomObjectMapper;
-import com.walmartapi.mapper.impl.ProductMapper;
 import com.walmartapi.model.Product;
 import com.walmartapi.repository.ProductRepository;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -44,6 +42,19 @@ public class ProductService  {
         }
 
         return productMapper.mapToDTO(product.get());
+    }
+
+    public Product updateProduct(Long id, Product product) {
+        getProductbyId(id);
+        product.setId(id);
+        ProductEntity entityToUpdate = productMapper.mapToEntity(product);
+        ProductEntity updatedEntity = productRepository.save(entityToUpdate);
+        return productMapper.mapToDTO(updatedEntity);
+    }
+
+    public void deleteProduct(Long id) {
+        getProductbyId(id); // lanza NotFound si no existe
+        productRepository.deleteById(id);
     }
 
 }
